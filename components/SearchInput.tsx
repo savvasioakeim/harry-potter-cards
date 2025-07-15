@@ -1,15 +1,18 @@
 export default function SearchInput({
   height = "h-5",
   placeholder = "",
+  value,
 
   onChange,
 }: {
   height?: string;
+  value?: string;
   placeholder?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }) {
   return (
     <input
+      value={value}
       onChange={onChange}
       type={"text"}
       placeholder={placeholder}

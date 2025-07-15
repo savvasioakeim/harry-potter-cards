@@ -83,7 +83,7 @@ export default function Home() {
   };
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-4 space-y-4 ">
       <div>
         <SearchInput
           onChange={(e) => handleHouseSearch(e.target.value)}
@@ -94,6 +94,7 @@ export default function Home() {
       {filteredHouses.map((house) => (
         <HarryPotterCard
           key={house.id}
+          id={house.id}
           animal={house.animal}
           name={house.name}
           houseColors={house.houseColours
