@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import HarryPotterCard from "../../components/HarryPotterCard";
 import SearchInput from "../../components/SearchInput";
+import { MdAirplanemodeActive } from "react-icons/md";
 
 type HouseType = {
   id: string;
@@ -20,6 +21,7 @@ export default function Home() {
   const [traitSearchTerms, setTraitSearchTerms] = useState<{
     [houseId: string]: string;
   }>({});
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetch("https://wizard-world-api.herokuapp.com/houses")
       .then((res) => res.json())
@@ -29,6 +31,9 @@ export default function Home() {
       })
       .catch((err) => {
         console.error("Error fetching houses:", err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -81,6 +86,20 @@ export default function Home() {
       })
     );
   };
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="mx-auto flex min-h-screen max-w-screen-sm items-center justify-center">
+          <div className="animate-spin h-32 w-32 rounded-full bg-gradient-to-r from-yellow-500 via-green-500 to-slate-500 p-1 flex items-center justify-center">
+            <div className=" h-28 w-28 rounded-full bg-white">
+              <p>Loading...</p>
+              <MdAirplanemodeActive className="text-4xl" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4 space-y-4 ">
@@ -91,6 +110,7 @@ export default function Home() {
           placeholder="Search houses"
         />
       </div>
+
       {filteredHouses.map((house) => (
         <HarryPotterCard
           key={house.id}
